@@ -96,6 +96,7 @@ export interface Creature {
 export interface Character extends Creature {
   nickname?: string;
   race: Race;
+  classes: Class[];
   level: number;
   alignment: Alignment;
   height?: number;
@@ -125,4 +126,9 @@ export interface Character extends Creature {
 export interface Race {
   name: string;
   subtype?: string;
+}
+
+export interface Class {
+  name: string;
+  spellcasting: AbilityName | null;
 }
