@@ -90,6 +90,7 @@ export interface Creature {
     };
   };
   savingThrowProficiencies: AbilityName[];
+  languages: string[];
 }
 
 export interface Character extends Creature {
@@ -112,6 +113,13 @@ export interface Character extends Creature {
   ideals: string[];
   bonds: string[];
   flaws: string[];
+  treasure: {
+    platinum: number;
+    // electrum: number; // Aaron hates electrum
+    gold: number;
+    silver: number;
+    copper: number;
+  };
 }
 
 export interface Race {
