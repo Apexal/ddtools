@@ -29,6 +29,20 @@ type Alignment =
   | "lawful evil"
   | "neutral evil"
   | "chaotic evil";
+type DamageType =
+  | "piercing"
+  | "slashing"
+  | "bludgeoning"
+  | "acid"
+  | "cold"
+  | "fire"
+  | "force"
+  | "lightning"
+  | "necrotic"
+  | "posion"
+  | "psychic"
+  | "radiant"
+  | "thunder";
 
 export interface Campaign {
   /** Player-facing name of campaign */
@@ -149,4 +163,26 @@ export interface Item {
   description?: string;
   isMagic: boolean;
   weight?: number;
+}
+
+export interface Weapon extends Item {
+  category: string;
+  damage: {
+    dice: Dice;
+    type: DamageType;
+  };
+  range: Range;
+  throwRange: Range;
+  isEquipped: boolean;
+}
+
+export interface Dice {
+  sides: number;
+  count: number;
+  modifier: number;
+}
+
+export interface Range {
+  normal: number;
+  long: number;
 }
