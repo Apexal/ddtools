@@ -1,3 +1,35 @@
+type AbilityName = "str" | "dex" | "con" | "int" | "wis";
+type SkillName =
+  | "Acrobatics"
+  | "Animal Handling"
+  | "Arcana"
+  | "Athletics"
+  | "Deception"
+  | "History"
+  | "Insight"
+  | "Intimidation"
+  | "Investigation"
+  | "Medicine"
+  | "Nature"
+  | "Perception"
+  | "Performance"
+  | "Persuasion"
+  | "Religion"
+  | "Sleight of Hand"
+  | "Stealth"
+  | "Survival";
+type SizeName = "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
+type Alignment =
+  | "lawful good"
+  | "neutral good"
+  | "chaotic good"
+  | "lawful neutral"
+  | "true neutral"
+  | "chaotic neutral"
+  | "lawful evil"
+  | "neutral evil"
+  | "chaotic evil";
+
 export interface Campaign {
   /** Player-facing name of campaign */
   name: string;
@@ -36,4 +68,53 @@ export interface Note {
 
 export interface User {}
 
-export interface Character {}
+export interface Creature {
+  name: string;
+  size: SizeName;
+  speed: number;
+  abilityScores: {
+    [ability in AbilityName]: number;
+  };
+  hitPoints: {
+    current: number;
+    temporary: number;
+    max: number;
+  };
+  armorClass: number;
+  skills: {
+    [skill in SkillName]: {
+      /** Value of skill modifier before any proficiency or expertise is applied */
+      rawModifier: number;
+      isProficient: boolean;
+      hasExpertise: boolean;
+    };
+  };
+  savingThrowProficiencies: AbilityName[];
+}
+
+export interface Character extends Creature {
+  nickname?: string;
+  race: Race;
+  level: number;
+  alignment: Alignment;
+  height?: number;
+  weight?: number;
+  proficiencyBonus: number;
+  hitDice: {
+    current: number;
+    max: number;
+  };
+  deathSaves: {
+    successes: number;
+    failures: number;
+  };
+  personalityTraits: string[];
+  ideals: string[];
+  bonds: string[];
+  flaws: string[];
+}
+
+export interface Race {
+  name: string;
+  subtype?: string;
+}
