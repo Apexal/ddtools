@@ -139,6 +139,9 @@ export interface Character extends Creature {
     flaws?: string[];
     backstory?: string;
   };
+  feats: Feat[];
+  weapons: Weapon[];
+  equipment: Equipment[];
   treasure: {
     platinum: number;
     // electrum: number; // Aaron hates electrum
@@ -185,4 +188,13 @@ export interface Dice {
 export interface Range {
   normal: number;
   long: number;
+}
+
+export interface Equipment extends Item {
+  quantity: number;
+}
+
+export interface Feat {
+  name: string;
+  description?: string;
 }
