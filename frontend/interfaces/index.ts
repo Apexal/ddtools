@@ -95,12 +95,11 @@ export interface Creature {
 
 export interface Character extends Creature {
   nickname?: string;
+  xp?: number;
   race: Race;
   classes: Class[];
   level: number;
   alignment: Alignment;
-  height?: number;
-  weight?: number;
   proficiencyBonus: number;
   hitDice: {
     current: number;
@@ -110,10 +109,22 @@ export interface Character extends Creature {
     successes: number;
     failures: number;
   };
-  personalityTraits: string[];
-  ideals: string[];
-  bonds: string[];
-  flaws: string[];
+  physical: {
+    age?: number;
+    eyes?: string;
+    hair?: string;
+    skin?: string;
+    height?: number;
+    weight?: number;
+    description?: string;
+  };
+  personality: {
+    traits?: string[];
+    ideals?: string[];
+    bonds?: string[];
+    flaws?: string[];
+    backstory?: string;
+  };
   treasure: {
     platinum: number;
     // electrum: number; // Aaron hates electrum
@@ -131,4 +142,11 @@ export interface Race {
 export interface Class {
   name: string;
   spellcasting: AbilityName | null;
+}
+
+export interface Item {
+  name: string;
+  description?: string;
+  isMagic: boolean;
+  weight?: number;
 }
