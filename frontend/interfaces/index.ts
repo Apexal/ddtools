@@ -1,51 +1,63 @@
-type AbilityName = "str" | "dex" | "con" | "int" | "wis";
-type SkillName =
-  | "Acrobatics"
-  | "Animal Handling"
-  | "Arcana"
-  | "Athletics"
-  | "Deception"
-  | "History"
-  | "Insight"
-  | "Intimidation"
-  | "Investigation"
-  | "Medicine"
-  | "Nature"
-  | "Perception"
-  | "Performance"
-  | "Persuasion"
-  | "Religion"
-  | "Sleight of Hand"
-  | "Stealth"
-  | "Survival";
+const ABILITIES = ["str", "dex", "con", "int", "wis"] as const;
+type AbilityName = typeof ABILITIES[number];
 
-/** https://www.dndbeyond.com/sources/basic-rules/monsters#Size */
-type SizeName = "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
+const SKILLS = [
+  "Acrobatics",
+  "Animal Handling",
+  "Arcana",
+  "Athletics",
+  "Deception",
+  "History",
+  "Insight",
+  "Intimidation",
+  "Investigation",
+  "Medicine",
+  "Nature",
+  "Perception",
+  "Performance",
+  "Persuasion",
+  "Religion",
+  "Sleight of Hand",
+  "Stealth",
+  "Survival",
+] as const;
 
-type Alignment =
-  | "lawful good"
-  | "neutral good"
-  | "chaotic good"
-  | "lawful neutral"
-  | "true neutral"
-  | "chaotic neutral"
-  | "lawful evil"
-  | "neutral evil"
-  | "chaotic evil";
-type DamageType =
-  | "piercing"
-  | "slashing"
-  | "bludgeoning"
-  | "acid"
-  | "cold"
-  | "fire"
-  | "force"
-  | "lightning"
-  | "necrotic"
-  | "posion"
-  | "psychic"
-  | "radiant"
-  | "thunder";
+const SIZES = [
+  "tiny",
+  "small",
+  "medium",
+  "large",
+  "huge",
+  "gargantuan",
+] as const;
+
+const ALIGNMENTS = [
+  "lawful good",
+  "neutral good",
+  "chaotic good",
+  "lawful neutral",
+  "true neutral",
+  "chaotic neutral",
+  "lawful evil",
+  "neutral evil",
+  "chaotic evil",
+] as const;
+
+const DAMAGE_TYPES = [
+  "piercing",
+  "slashing",
+  "bludgeoning",
+  "acid",
+  "cold",
+  "fire",
+  "force",
+  "lightning",
+  "necrotic",
+  "posion",
+  "psychic",
+  "radiant",
+  "thunder",
+] as const;
 
 export interface Campaign {
   /** Player-facing name of campaign */
@@ -74,7 +86,8 @@ export interface Note {
   /** When the note was created */
   timestamp: Date;
   /** Who can view the note */
-  visibility: "owners" | "all";
+  visibility: "owners";
+  all;
 }
 
 export interface User {}
@@ -83,7 +96,7 @@ export interface Creature {
   /** The name of the creature */
   name: string;
   /** The creature's current size */
-  size: SizeName;
+  size: typeof SIZES[number];
   /** The creature's current speed */
   speed: number;
   /** The creature's ability scores */
@@ -100,7 +113,7 @@ export interface Creature {
   armorClass: number;
   /** The creature's skill values, proficiencies, and expertises */
   skills: {
-    [skill in SkillName]: {
+    [skill in typeof SKILLS[number]]: {
       /** Value of skill modifier before any proficiency or expertise is applied */
       rawModifier: number;
       isProficient: boolean;
@@ -134,7 +147,7 @@ export interface Character extends Creature {
   /** The character's current level */
   level: number;
   /** The character's moral alignment */
-  alignment: Alignment;
+  alignment: typeof ALIGNMENTS[number];
   /** The character's current proficiency bonus */
   proficiencyBonus: number;
   /** Whether the character is currently inspired */
@@ -190,7 +203,8 @@ export interface Race {
 
 export interface Class {
   name: string;
-  spellcasting: AbilityName | null;
+  spellcasting: AbilityName;
+  null;
 }
 
 export interface Item {
@@ -204,7 +218,7 @@ export interface Weapon extends Item {
   category: string;
   damage: {
     dice: Dice;
-    type: DamageType;
+    type: typeof DAMAGE_TYPES[number];
   };
   range: Range;
   throwRange: Range;
