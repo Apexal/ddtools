@@ -138,14 +138,17 @@ export interface Creature {
   // hasShield: boolean; // TODO: determine if needed
   /** The creature's current armor class */
   armorClass: number;
-  /** The creature's skill values, proficiencies, and expertises */
+  /** The creature's skill values (taking into consideration proficiencies, expertises, etc.) */
   skills: {
-    [skill in typeof SKILLS[number]]: {
-      /** Value of skill modifier before any proficiency or expertise is applied */
-      rawModifier: number;
-      isProficient: boolean;
-      hasExpertise: boolean;
-    };
+    [skill in typeof SKILLS[number]]: number;
+  };
+  /** List of skills the creature is proficient in */
+  skillProficiencies: typeof SKILLS[number][];
+  /** List of skills the creature has expertise in */
+  skillExpertises: typeof SKILLS[number][];
+  /** The creature's saving throw modifiers (taking into consideration proficiencies, etc.) */
+  savingThrows: {
+    [ability in typeof ABILITIES[number]]: number;
   };
   /** The saving throws the creature is proficient in  */
   savingThrowProficiencies: typeof ABILITIES[number][];
