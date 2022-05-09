@@ -58,7 +58,7 @@ const DAMAGE_TYPES = [
   "thunder",
 ] as const;
 
-const PROPERTIES = [
+const CONDITIONS = [
   "blinded",
   "charmed",
   "deafened",
@@ -127,6 +127,7 @@ export interface Creature {
     temporary: number;
     max: number;
   };
+  // hasShield: boolean; // TODO: determine if needed
   /** The creature's current armor class */
   armorClass: number;
   /** The creature's skill values, proficiencies, and expertises */
@@ -151,9 +152,16 @@ export interface Creature {
   };
   /** The creature's current conditions */
   conditions: {
-    [condition in typeof PROPERTIES[number]]: boolean;
+    [condition in typeof CONDITIONS[number]]: boolean;
   };
-  conditionI;
+  /** List of conditions the creature is immune to */
+  conditionImmunities: typeof CONDITIONS[number][];
+  /** List of damage types the creature is immune to */
+  damageImmunities: typeof DAMAGE_TYPES[number][];
+  /** List of damage types the creature has resistance to */
+  damageResistances: typeof DAMAGE_TYPES[number][];
+  /** List of damage types the creature is vulnerable to */
+  damageVulnerabilities: typeof DAMAGE_TYPES[number][];
   /** The creature's tags (https://www.dndbeyond.com/sources/basic-rules/monsters#Tags) */
   tags: string[];
 }
