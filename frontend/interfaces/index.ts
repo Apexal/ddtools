@@ -18,7 +18,10 @@ type SkillName =
   | "Sleight of Hand"
   | "Stealth"
   | "Survival";
+
+/** https://www.dndbeyond.com/sources/basic-rules/monsters#Size */
 type SizeName = "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
+
 type Alignment =
   | "lawful good"
   | "neutral good"
@@ -108,6 +111,15 @@ export interface Creature {
   savingThrowProficiencies: AbilityName[];
   /** The creature's understood languages */
   languages: string[];
+  /** The special senses the creature has (https://www.dndbeyond.com/sources/basic-rules/monsters#Senses) */
+  senses: {
+    blindsight: boolean;
+    darkvision: boolean;
+    tremorsense: boolean;
+    truesight: boolean;
+  };
+  /** The creature's tags (https://www.dndbeyond.com/sources/basic-rules/monsters#Tags) */
+  tags: string[];
 }
 
 export interface Character extends Creature {
