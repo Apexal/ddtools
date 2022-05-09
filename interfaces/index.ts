@@ -258,7 +258,7 @@ export interface Item {
 export interface Weapon extends Item {
   category: string;
   damage: {
-    dice: Dice;
+    diceRoll: DiceRoll;
     type: typeof DAMAGE_TYPES[number];
   };
   range: Range;
@@ -266,9 +266,12 @@ export interface Weapon extends Item {
   isEquipped: boolean;
 }
 
-export interface Dice {
+export interface DiceRoll {
+  /** The dice to roll */
   sides: number;
+  /** The number of times to roll the `sides`-sided dice */
   count: number;
+  /** The modifier to add onto the roll value */
   modifier: number;
 }
 
