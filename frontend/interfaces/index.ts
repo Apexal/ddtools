@@ -77,11 +77,20 @@ const CONDITIONS = [
   "unconscious",
 ] as const;
 
+const SENSES = [
+  "blindsight",
+  "darkvision",
+  "tremorsense",
+  "truesight",
+] as const;
+
+const SPELL_COMPONENTS = ["V", "S", "M", "F", "DF", "XP"] as const;
+
 export interface Campaign {
   /** Player-facing name of campaign */
   name: string;
   /** Player-facing description of campaign */
-  description?: string;
+  description: string;
   /** Public URLs to world maps */
   worldMapUrls: string[];
   /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
@@ -96,16 +105,15 @@ export interface Campaign {
 
 export interface Note {
   /** Creator and owner of note */
-  userId: string;
+  authorUserId: string;
   /** Optional title of note */
   title?: string;
   /** The content of the note in ____ format */
   body: string;
   /** When the note was created */
-  timestamp: Date;
+  timestamp: number;
   /** Who can view the note */
-  visibility: "owners";
-  all;
+  visibility: "owners" | "all";
 }
 
 export interface User {}
@@ -144,16 +152,9 @@ export interface Creature {
   /** The creature's understood languages */
   languages: string[];
   /** The special senses the creature has (https://www.dndbeyond.com/sources/basic-rules/monsters#Senses) */
-  senses: {
-    blindsight: boolean;
-    darkvision: boolean;
-    tremorsense: boolean;
-    truesight: boolean;
-  };
+  senses: typeof SENSES[number][];
   /** The creature's current conditions */
-  conditions: {
-    [condition in typeof CONDITIONS[number]]: boolean;
-  };
+  conditions: typeof CONDITIONS[number][];
   /** List of conditions the creature is immune to */
   conditionImmunities: typeof CONDITIONS[number][];
   /** List of damage types the creature is immune to */
@@ -170,7 +171,7 @@ export interface Character extends Creature {
   /** The character's optional nickname */
   nickname?: string;
   /** The character's current experience points (if used in campaign) */
-  xp?: number;
+  xp: number;
   /** The character's race */
   race: Race;
   /** The character's class(es) */
@@ -195,21 +196,21 @@ export interface Character extends Creature {
   };
   /** The character's physical attribute descriptions */
   physical: {
-    age?: number;
-    eyes?: string;
-    hair?: string;
-    skin?: string;
-    height?: number;
-    weight?: number;
-    description?: string;
+    age: number;
+    eyes: string;
+    hair: string;
+    skin: string;
+    height: number;
+    weight: number;
+    description: string;
   };
   /** The character's personality descriptions */
   personality: {
-    traits?: string[];
-    ideals?: string[];
-    bonds?: string[];
-    flaws?: string[];
-    backstory?: string;
+    traits: string[];
+    ideals: string[];
+    bonds: string[];
+    flaws: string[];
+    backstory: string;
   };
   /** The character's feats */
   feats: Feat[];
@@ -217,7 +218,7 @@ export interface Character extends Creature {
   armorProficiencies: string[];
   toolProficiencies: string[];
   /** The character's current spells */
-  spells: Spell[];
+  spells?: Spell[];
   /** The character's weapons (equipped and not) */
   weapons: Weapon[];
   /** The character's currently equipped items */
@@ -239,14 +240,14 @@ export interface Race {
 
 export interface Class {
   name: string;
-  spellcasting: typeof ABILITIES[number];
+  spellcastingAbility?: typeof ABILITIES[number];
 }
 
 export interface Item {
   name: string;
-  description?: string;
+  description: string;
   isMagic: boolean;
-  weight?: number;
+  weight: number;
 }
 
 export interface Weapon extends Item {
@@ -277,7 +278,7 @@ export interface Equipment extends Item {
 
 export interface Feat {
   name: string;
-  description?: string;
+  description: string;
 }
 
 export interface Spell {
@@ -288,7 +289,7 @@ export interface Spell {
   level: number;
   castingTime: string;
   range: string;
-  components: ("V" | "S" | "M" | "F" | "DF" | "XP")[];
+  components: typeof SPELL_COMPONENTS[number][];
   material: string;
   ritual: boolean;
   concentration: boolean;
