@@ -1,4 +1,4 @@
-const ABILITIES = ["str", "dex", "con", "int", "wis"] as const;
+const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"] as const;
 
 const SKILLS = [
   "acrobatics",
