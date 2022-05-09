@@ -1,25 +1,24 @@
 const ABILITIES = ["str", "dex", "con", "int", "wis"] as const;
-type AbilityName = typeof ABILITIES[number];
 
 const SKILLS = [
-  "Acrobatics",
-  "Animal Handling",
-  "Arcana",
-  "Athletics",
-  "Deception",
-  "History",
-  "Insight",
-  "Intimidation",
-  "Investigation",
-  "Medicine",
-  "Nature",
-  "Perception",
-  "Performance",
-  "Persuasion",
-  "Religion",
-  "Sleight of Hand",
-  "Stealth",
-  "Survival",
+  "acrobatics",
+  "animal handling",
+  "arcana",
+  "athletics",
+  "deception",
+  "history",
+  "insight",
+  "intimidation",
+  "investigation",
+  "medicine",
+  "nature",
+  "perception",
+  "performance",
+  "persuasion",
+  "religion",
+  "sleight of Hand",
+  "stealth",
+  "survival",
 ] as const;
 
 const SIZES = [
@@ -57,6 +56,25 @@ const DAMAGE_TYPES = [
   "psychic",
   "radiant",
   "thunder",
+] as const;
+
+const PROPERTIES = [
+  "blinded",
+  "charmed",
+  "deafened",
+  "exhaustion",
+  "frightened",
+  "grappled",
+  "incapacitated",
+  "invisible",
+  "necrotic",
+  "paralyzed",
+  "petrified",
+  "poisoned",
+  "prone",
+  "restrained",
+  "stunned",
+  "unconscious",
 ] as const;
 
 export interface Campaign {
@@ -101,7 +119,7 @@ export interface Creature {
   speed: number;
   /** The creature's ability scores */
   abilityScores: {
-    [ability in AbilityName]: number;
+    [ability in typeof ABILITIES[number]]: number;
   };
   /** The creature's hitpoint info */
   hitPoints: {
@@ -121,7 +139,7 @@ export interface Creature {
     };
   };
   /** The saving throws the creature is proficient in  */
-  savingThrowProficiencies: AbilityName[];
+  savingThrowProficiencies: typeof ABILITIES[number][];
   /** The creature's understood languages */
   languages: string[];
   /** The special senses the creature has (https://www.dndbeyond.com/sources/basic-rules/monsters#Senses) */
@@ -131,6 +149,11 @@ export interface Creature {
     tremorsense: boolean;
     truesight: boolean;
   };
+  /** The creature's current conditions */
+  conditions: {
+    [condition in typeof PROPERTIES[number]]: boolean;
+  };
+  conditionI;
   /** The creature's tags (https://www.dndbeyond.com/sources/basic-rules/monsters#Tags) */
   tags: string[];
 }
@@ -203,8 +226,7 @@ export interface Race {
 
 export interface Class {
   name: string;
-  spellcasting: AbilityName;
-  null;
+  spellcasting: typeof ABILITIES[number];
 }
 
 export interface Item {
