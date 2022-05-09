@@ -213,6 +213,11 @@ export interface Character extends Creature {
   };
   /** The character's feats */
   feats: Feat[];
+  weaponProficiencies: string[];
+  armorProficiencies: string[];
+  toolProficiencies: string[];
+  /** The character's current spells */
+  spells: Spell[];
   /** The character's weapons (equipped and not) */
   weapons: Weapon[];
   /** The character's currently equipped items */
@@ -273,4 +278,23 @@ export interface Equipment extends Item {
 export interface Feat {
   name: string;
   description?: string;
+}
+
+export interface Spell {
+  name: string;
+  description: string;
+  higherLevel: string;
+  /** Spell level where 0 means cantrip */
+  level: number;
+  castingTime: string;
+  range: string;
+  components: ("V" | "S" | "M" | "F" | "DF" | "XP")[];
+  material: string;
+  ritual: boolean;
+  concentration: boolean;
+  duration: string;
+  school: string;
+  attackSave: string;
+  damageEffect: string;
+  tags: string[];
 }
