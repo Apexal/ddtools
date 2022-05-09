@@ -125,6 +125,8 @@ export interface Character extends Creature {
   alignment: Alignment;
   /** The character's current proficiency bonus */
   proficiencyBonus: number;
+  /** Whether the character is currently inspired */
+  hasInspiration: boolean;
   /** The character's hit dice info */
   hitDice: {
     current: number;
