@@ -1,0 +1,21 @@
+{
+  "name": "ddtools-types",
+  "private": false,
+  "version": "0.1.0",
+  "description": "TypeScript definitions for Daddy's Dungeon Tools.",
+  "main": "",
+  "types": "index.d.ts",
+  "typeScriptVersion": 4.5,
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apexal/ddtools.git"
+  },
+  "author": "Frank Matranga <thefrankmatranga+ddtools@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Apexal/ddtools-types/issues"
+  },
+  "homepage": "https://github.com/Apexal-types/ddtools#readme"
+}
