@@ -47,22 +47,16 @@ type DamageType =
 export interface Campaign {
   /** Player-facing name of campaign */
   name: string;
-
   /** Player-facing description of campaign */
   description?: string;
-
   /** Public URLs to world maps */
   worldMapUrls: string[];
-
-  /** The user(s) running the campaign, i.e. the campaign owners */
-  dms: User[];
-
+  /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
+  dmUserIds: string[];
   /** List of notes only DMs can access */
   dmNotes: Note[];
-
-  /** The users participating in the campaign as players */
-  players: User[];
-
+  /** The ids of users participating in the campaign as players */
+  playerUserIds: string[];
   /** List of notes */
   playerNotes: Note[];
 }
@@ -83,18 +77,25 @@ export interface Note {
 export interface User {}
 
 export interface Creature {
+  /** The name of the creature */
   name: string;
+  /** The creature's current size */
   size: SizeName;
+  /** The creature's current speed */
   speed: number;
+  /** The creature's ability scores */
   abilityScores: {
     [ability in AbilityName]: number;
   };
+  /** The creature's hitpoint info */
   hitPoints: {
     current: number;
     temporary: number;
     max: number;
   };
+  /** The creature's current armor class */
   armorClass: number;
+  /** The creature's skill values, proficiencies, and expertises */
   skills: {
     [skill in SkillName]: {
       /** Value of skill modifier before any proficiency or expertise is applied */
@@ -103,7 +104,9 @@ export interface Creature {
       hasExpertise: boolean;
     };
   };
+  /** The saving throws the creature is proficient in  */
   savingThrowProficiencies: AbilityName[];
+  /** The creature's understood languages */
   languages: string[];
 }
 
