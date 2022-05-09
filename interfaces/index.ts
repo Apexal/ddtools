@@ -138,6 +138,8 @@ export interface Creature {
   // hasShield: boolean; // TODO: determine if needed
   /** The creature's current armor class */
   armorClass: number;
+  /** The creature's passive perception/wisdom */
+  passivePerception: number;
   /** The creature's skill values (taking into consideration proficiencies, expertises, etc.) */
   skills: {
     [skill in typeof SKILLS[number]]: number;
