@@ -108,21 +108,31 @@ export interface Creature {
 }
 
 export interface Character extends Creature {
+  /** The character's optional nickname */
   nickname?: string;
+  /** The character's current experience points (if used in campaign) */
   xp?: number;
+  /** The character's race */
   race: Race;
+  /** The character's class(es) */
   classes: Class[];
+  /** The character's current level */
   level: number;
+  /** The character's moral alignment */
   alignment: Alignment;
+  /** The character's current proficiency bonus */
   proficiencyBonus: number;
+  /** The character's hit dice info */
   hitDice: {
     current: number;
     max: number;
   };
+  /** The character's current death saves info */
   deathSaves: {
     successes: number;
     failures: number;
   };
+  /** The character's physical attribute descriptions */
   physical: {
     age?: number;
     eyes?: string;
@@ -132,6 +142,7 @@ export interface Character extends Creature {
     weight?: number;
     description?: string;
   };
+  /** The character's personality descriptions */
   personality: {
     traits?: string[];
     ideals?: string[];
@@ -139,9 +150,13 @@ export interface Character extends Creature {
     flaws?: string[];
     backstory?: string;
   };
+  /** The character's feats */
   feats: Feat[];
+  /** The character's weapons (equipped and not) */
   weapons: Weapon[];
+  /** The character's currently equipped items */
   equipment: Equipment[];
+  /** The character's current loot */
   treasure: {
     platinum: number;
     // electrum: number; // Aaron hates electrum
