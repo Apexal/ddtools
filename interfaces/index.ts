@@ -123,8 +123,15 @@ export interface Creature {
   name: string;
   /** The creature's current size */
   size: typeof SIZES[number];
-  /** The creature's current speed */
-  speed: number;
+  /** The creature's current speeds */
+  speed: {
+    /** The basic speed show on the character sheet */
+    walking: number;
+    climbing: number;
+    swimming: number;
+    flying: number;
+    burrowing: number;
+  };
   /** The creature's ability scores */
   abilityScores: {
     [ability in typeof ABILITIES[number]]: number;
@@ -156,8 +163,10 @@ export interface Creature {
   savingThrowProficiencies: typeof ABILITIES[number][];
   /** The creature's understood languages */
   languages: string[];
-  /** The special senses the creature has (https://www.dndbeyond.com/sources/basic-rules/monsters#Senses) */
-  senses: typeof SENSES[number][];
+  /** The special senses the creature has and their ranges in feet (https://www.dndbeyond.com/sources/basic-rules/monsters#Senses) */
+  senses: {
+    [sense in typeof SENSES[number]]: number;
+  };
   /** The creature's current conditions */
   conditions: typeof CONDITIONS[number][];
   /** List of conditions the creature is immune to */
@@ -181,8 +190,6 @@ export interface Character extends Creature {
   race: Race;
   /** The character's class(es) */
   classes: Class[];
-  /** The character's current level */
-  level: number;
   /** The character's moral alignment */
   alignment: typeof ALIGNMENTS[number];
   /** The character's current proficiency bonus */
@@ -246,6 +253,8 @@ export interface Race {
 export interface Class {
   name: string;
   spellcastingAbility?: typeof ABILITIES[number];
+  /** The classes current level */
+  level: number;
 }
 
 export interface Item {
