@@ -308,13 +308,15 @@ export interface SpellDuration {
     type: "round" | "hour" | "day";
     amount: number;
   };
+  /** When the spell ends */
+  ends?: string[];
   concentration?: boolean;
 }
 
 export interface SpellRange {
   type: "point" | "cone" | "cube" | "cylinder" | "line" | "sphere";
   distance: {
-    type: "self" | "feet";
+    type: "self" | "feet" | "touch";
     amount?: number;
   };
 }
@@ -334,10 +336,18 @@ export interface Spell {
   range: SpellRange;
   /** Required components to cast the spell */
   components: {
-    [component in typeof SPELL_COMPONENTS[number]]: boolean;
+    [component in typeof SPELL_COMPONENTS[number]]:
+      | boolean
+      | {
+          text: string;
+          cost: number;
+        };
   };
   /** Duration of spell effect */
   duration: SpellDuration[];
+  meta?: {
+    ritual?: boolean;
+  };
   school: string; // TODO: list out schools
   /** The possible damage types the spell inflicts */
   damageInflict: typeof DAMAGE_TYPES[number][];
@@ -345,6 +355,7 @@ export interface Spell {
   conditionInflict: typeof CONDITIONS[number][];
   /** The possible saving throws the target has to roll */
   savingThrow: typeof ABILITIES[number][];
+  spellAttack: string[];
   tags: string[];
   source?: Source;
 }
