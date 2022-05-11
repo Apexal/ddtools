@@ -86,7 +86,12 @@ const SENSES = [
 
 const SPELL_COMPONENTS = ["v", "s", "m"] as const;
 
-export interface Campaign {
+export interface FirestoreDoc {
+  ref: any;
+  id: any;
+}
+
+export interface Campaign extends FirestoreDoc {
   /** Player-facing name of campaign */
   name: string;
   /** Player-facing description of campaign */
