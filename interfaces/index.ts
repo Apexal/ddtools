@@ -5,8 +5,8 @@ import * as spell from './spell';
 
 
 export interface FirestoreDoc {
-  ref: any;
-  id: any;
+  ref?: any;
+  id?: any;
 }
 
 export interface Campaign extends FirestoreDoc {
