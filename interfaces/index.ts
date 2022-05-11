@@ -84,7 +84,7 @@ const SENSES = [
   "truesight",
 ] as const;
 
-const SPELL_COMPONENTS = ["V", "S", "M", "F", "DF", "XP"] as const;
+const SPELL_COMPONENTS = ["v", "s", "m"] as const;
 
 export interface Campaign {
   /** Player-facing name of campaign */
@@ -248,6 +248,7 @@ export interface Character extends Creature {
 export interface Race {
   name: string;
   subtype?: string;
+  source?: Source;
 }
 
 export interface Class {
@@ -255,6 +256,7 @@ export interface Class {
   spellcastingAbility?: typeof ABILITIES[number];
   /** The classes current level */
   level: number;
+  source?: Source;
 }
 
 export interface Item {
@@ -262,6 +264,7 @@ export interface Item {
   description: string;
   isMagic: boolean;
   weight: number;
+  source?: Source;
 }
 
 export interface Weapon extends Item {
@@ -296,23 +299,57 @@ export interface Equipment extends Item {
 export interface Feat {
   name: string;
   description: string;
+  source?: Source;
+}
+
+export interface SpellDuration {
+  type: "timed" | "instant";
+  duration?: {
+    type: "round" | "hour" | "day";
+    amount: number;
+  };
+  concentration?: boolean;
+}
+
+export interface SpellRange {
+  type: "point" | "cone" | "cube" | "cylinder" | "line" | "sphere";
+  distance: {
+    type: "self" | "feet";
+    amount?: number;
+  };
 }
 
 export interface Spell {
   name: string;
-  description: string;
-  higherLevel: string;
+  /** Description of spell and effects */
+  entries: string[];
   /** Spell level where 0 means cantrip */
   level: number;
-  castingTime: string;
-  range: string;
-  components: typeof SPELL_COMPONENTS[number][];
-  material: string;
-  ritual: boolean;
-  concentration: boolean;
-  duration: string;
-  school: string;
-  attackSave: string;
-  damageEffect: string;
+  /** How long it takes to cast the spell */
+  time: {
+    number: number;
+    unit: "action" | "bonus" | "reaction" | "minute";
+  }[];
+  /** How far you can cast the spell */
+  range: SpellRange;
+  /** Required components to cast the spell */
+  components: {
+    [component in typeof SPELL_COMPONENTS[number]]: boolean;
+  };
+  /** Duration of spell effect */
+  duration: SpellDuration[];
+  school: string; // TODO: list out schools
+  /** The possible damage types the spell inflicts */
+  damageInflict: typeof DAMAGE_TYPES[number][];
+  /** The possible conditions the spell inflicts */
+  conditionInflict: typeof CONDITIONS[number][];
+  /** The possible saving throws the target has to roll */
+  savingThrow: typeof ABILITIES[number][];
   tags: string[];
+  source?: Source;
+}
+
+export interface Source {
+  name: string;
+  pages: number[];
 }
