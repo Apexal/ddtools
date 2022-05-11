@@ -1,90 +1,8 @@
-const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"] as const;
+import * as util from './util';
+import * as spell from './spell';
 
-const SKILLS = [
-  "acrobatics",
-  "animal handling",
-  "arcana",
-  "athletics",
-  "deception",
-  "history",
-  "insight",
-  "intimidation",
-  "investigation",
-  "medicine",
-  "nature",
-  "perception",
-  "performance",
-  "persuasion",
-  "religion",
-  "sleight of Hand",
-  "stealth",
-  "survival",
-] as const;
 
-const SIZES = [
-  "tiny",
-  "small",
-  "medium",
-  "large",
-  "huge",
-  "gargantuan",
-] as const;
 
-const ALIGNMENTS = [
-  "lawful good",
-  "neutral good",
-  "chaotic good",
-  "lawful neutral",
-  "true neutral",
-  "chaotic neutral",
-  "lawful evil",
-  "neutral evil",
-  "chaotic evil",
-] as const;
-
-const DAMAGE_TYPES = [
-  "piercing",
-  "slashing",
-  "bludgeoning",
-  "acid",
-  "cold",
-  "fire",
-  "force",
-  "lightning",
-  "necrotic",
-  "posion",
-  "psychic",
-  "radiant",
-  "thunder",
-] as const;
-
-const CONDITIONS = [
-  "blinded",
-  "charmed",
-  "deafened",
-  "exhaustion",
-  "frightened",
-  "grappled",
-  "incapacitated",
-  "invisible",
-  "necrotic",
-  "paralyzed",
-  "petrified",
-  "poisoned",
-  "prone",
-  "restrained",
-  "stunned",
-  "unconscious",
-] as const;
-
-const SENSES = [
-  "blindsight",
-  "darkvision",
-  "tremorsense",
-  "truesight",
-] as const;
-
-const SPELL_COMPONENTS = ["v", "s", "m"] as const;
 
 export interface FirestoreDoc {
   ref: any;
@@ -131,7 +49,7 @@ export interface Creature {
   /** The name of the creature */
   name: string;
   /** The creature's current size */
-  size: typeof SIZES[number];
+  size: typeof util.SIZES[number];
   /** The creature's current speeds */
   speed: {
     /** The basic speed show on the character sheet */
@@ -143,7 +61,7 @@ export interface Creature {
   };
   /** The creature's ability scores */
   abilityScores: {
-    [ability in typeof ABILITIES[number]]: number;
+    [ability in typeof util.ABILITIES[number]]: number;
   };
   /** The creature's hitpoint info */
   hitPoints: {
@@ -158,34 +76,34 @@ export interface Creature {
   passivePerception: number;
   /** The creature's skill values (taking into consideration proficiencies, expertises, etc.) */
   skills: {
-    [skill in typeof SKILLS[number]]: number;
+    [skill in typeof util.SKILLS[number]]: number;
   };
   /** List of skills the creature is proficient in */
-  skillProficiencies: typeof SKILLS[number][];
+  skillProficiencies: typeof util.SKILLS[number][];
   /** List of skills the creature has expertise in */
-  skillExpertises: typeof SKILLS[number][];
+  skillExpertises: typeof util.SKILLS[number][];
   /** The creature's saving throw modifiers (taking into consideration proficiencies, etc.) */
   savingThrows: {
-    [ability in typeof ABILITIES[number]]: number;
+    [ability in typeof util.ABILITIES[number]]: number;
   };
   /** The saving throws the creature is proficient in  */
-  savingThrowProficiencies: typeof ABILITIES[number][];
+  savingThrowProficiencies: typeof util.ABILITIES[number][];
   /** The creature's understood languages */
   languages: string[];
   /** The special senses the creature has and their ranges in feet (https://www.dndbeyond.com/sources/basic-rules/monsters#Senses) */
   senses: {
-    [sense in typeof SENSES[number]]: number;
+    [sense in typeof util.SENSES[number]]: number;
   };
   /** The creature's current conditions */
-  conditions: typeof CONDITIONS[number][];
+  conditions: typeof util.CONDITIONS[number][];
   /** List of conditions the creature is immune to */
-  conditionImmunities: typeof CONDITIONS[number][];
+  conditionImmunities: typeof util.CONDITIONS[number][];
   /** List of damage types the creature is immune to */
-  damageImmunities: typeof DAMAGE_TYPES[number][];
+  damageImmunities: typeof util.DAMAGE_TYPES[number][];
   /** List of damage types the creature has resistance to */
-  damageResistances: typeof DAMAGE_TYPES[number][];
+  damageResistances: typeof util.DAMAGE_TYPES[number][];
   /** List of damage types the creature is vulnerable to */
-  damageVulnerabilities: typeof DAMAGE_TYPES[number][];
+  damageVulnerabilities: typeof util.DAMAGE_TYPES[number][];
   /** The creature's tags (https://www.dndbeyond.com/sources/basic-rules/monsters#Tags) */
   tags: string[];
 }
@@ -200,7 +118,7 @@ export interface Character extends Creature {
   /** The character's class(es) */
   classes: Class[];
   /** The character's moral alignment */
-  alignment: typeof ALIGNMENTS[number];
+  alignment: typeof util.ALIGNMENTS[number];
   /** The character's current proficiency bonus */
   proficiencyBonus: number;
   /** Whether the character is currently inspired */
@@ -234,12 +152,12 @@ export interface Character extends Creature {
     backstory: string;
   };
   /** The character's feats */
-  feats: Feat[];
+  feats: spell.Feat[];
   weaponProficiencies: string[];
   armorProficiencies: string[];
   toolProficiencies: string[];
   /** The character's current spells */
-  spells?: Spell[];
+  spells?: spell.Spell[];
   /** The character's weapons (equipped and not) */
   weapons: Weapon[];
   /** The character's currently equipped items */
@@ -254,6 +172,12 @@ export interface Character extends Creature {
   };
 }
 
+
+export interface Source {
+	name: string;
+	pages: number[];
+}
+
 export interface Race {
   name: string;
   subtype?: string;
@@ -262,7 +186,7 @@ export interface Race {
 
 export interface Class {
   name: string;
-  spellcastingAbility?: typeof ABILITIES[number];
+  spellcastingAbility?: typeof util.ABILITIES[number];
   /** The classes current level */
   level: number;
   source?: Source;
@@ -280,7 +204,7 @@ export interface Weapon extends Item {
   category: string;
   damage: {
     diceRoll: DiceRoll;
-    type: typeof DAMAGE_TYPES[number];
+    type: typeof util.DAMAGE_TYPES[number];
   };
   range: Range;
   throwRange: Range;
@@ -296,80 +220,8 @@ export interface DiceRoll {
   modifier: number;
 }
 
-export interface Range {
-  normal: number;
-  long: number;
-}
+
 
 export interface Equipment extends Item {
   quantity: number;
-}
-
-export interface Feat {
-  name: string;
-  description: string;
-  source?: Source;
-}
-
-export interface SpellDuration {
-  type: "timed" | "instant";
-  duration?: {
-    type: "round" | "hour" | "day";
-    amount: number;
-  };
-  /** When the spell ends */
-  ends?: string[];
-  concentration?: boolean;
-}
-
-export interface SpellRange {
-  type: "point" | "cone" | "cube" | "cylinder" | "line" | "sphere";
-  distance: {
-    type: "self" | "feet" | "touch";
-    amount?: number;
-  };
-}
-
-export interface Spell {
-  name: string;
-  /** Description of spell and effects */
-  entries: string[];
-  /** Spell level where 0 means cantrip */
-  level: number;
-  /** How long it takes to cast the spell */
-  time: {
-    number: number;
-    unit: "action" | "bonus" | "reaction" | "minute";
-  }[];
-  /** How far you can cast the spell */
-  range: SpellRange;
-  /** Required components to cast the spell */
-  components: {
-    [component in typeof SPELL_COMPONENTS[number]]:
-      | boolean
-      | {
-          text: string;
-          cost: number;
-        };
-  };
-  /** Duration of spell effect */
-  duration: SpellDuration[];
-  meta?: {
-    ritual?: boolean;
-  };
-  school: string; // TODO: list out schools
-  /** The possible damage types the spell inflicts */
-  damageInflict: typeof DAMAGE_TYPES[number][];
-  /** The possible conditions the spell inflicts */
-  conditionInflict: typeof CONDITIONS[number][];
-  /** The possible saving throws the target has to roll */
-  savingThrow: typeof ABILITIES[number][];
-  spellAttack: string[];
-  tags: string[];
-  source?: Source;
-}
-
-export interface Source {
-  name: string;
-  pages: number[];
 }
