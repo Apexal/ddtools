@@ -90,17 +90,21 @@ export interface Campaign {
   /** Player-facing name of campaign */
   name: string;
   /** Player-facing description of campaign */
-  description: string;
+  description?: string;
   /** Public URLs to world maps */
-  worldMapUrls: string[];
+  worldMapUrls?: string[];
   /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
-  dmUserIds: string[];
+  dmUserIds?: string[];
+  /** The emails of user(s) currently with pending invites to DM */
+  dmInviteEmails?: string[];
   /** List of notes only DMs can access */
-  dmNotes: Note[];
+  dmNotes?: Note[];
   /** The ids of users participating in the campaign as players */
-  playerUserIds: string[];
+  playerUserIds?: string[];
+  /** The emails of user(s) currently with pending invites to play */
+  playerInviteEmails?: string[];
   /** List of notes */
-  playerNotes: Note[];
+  playerNotes?: Note[];
 }
 
 export interface Note {
