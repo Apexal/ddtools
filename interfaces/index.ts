@@ -87,8 +87,8 @@ const SENSES = [
 const SPELL_COMPONENTS = ["v", "s", "m"] as const;
 
 export interface FirestoreDoc {
-  ref: any;
-  id: any;
+  ref?: any;
+  id?: any;
 }
 
 export interface Campaign extends FirestoreDoc {
