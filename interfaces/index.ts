@@ -86,9 +86,24 @@ const SENSES = [
 
 const SPELL_COMPONENTS = ["v", "s", "m"] as const;
 
+type UserID = string;
+
 export interface FirestoreDoc {
   ref?: any;
   id?: any;
+}
+
+/** Adds a field indicating the main owner of the entity */
+export interface Owned {
+  ownerUserId: UserID;
+}
+
+/** Adds a field indicating who this entity is shared with besides the owner. */
+export interface Shareable {
+  sharedWith: {
+    permission: "read" | "write";
+    target: "players" | "dms" | UserID[];
+  }[];
 }
 
 export interface Campaign extends FirestoreDoc {
@@ -99,35 +114,29 @@ export interface Campaign extends FirestoreDoc {
   /** Public URLs to world maps */
   worldMapUrls?: string[];
   /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
-  dmUserIds?: string[];
+  dmUserIds?: UserID[];
   /** The emails of user(s) currently with pending invites to DM */
   dmInviteEmails?: string[];
   /** List of notes only DMs can access */
   dmNotes?: Note[];
   /** The ids of users participating in the campaign as players */
-  playerUserIds?: string[];
+  playerUserIds?: UserID[];
   /** The emails of user(s) currently with pending invites to play */
   playerInviteEmails?: string[];
   /** List of notes */
   playerNotes?: Note[];
 }
 
-export interface Note {
-  /** Creator and owner of note */
-  authorUserId: string;
+export interface Note extends Owned, Shareable {
   /** Optional title of note */
   title?: string;
   /** The content of the note in ____ format */
   body: string;
   /** When the note was created */
   timestamp: number;
-  /** Who can view the note */
-  visibility: "owners" | "all";
 }
 
-export interface User {}
-
-export interface Creature {
+export interface Creature extends Owned, Shareable {
   /** The name of the creature */
   name: string;
   /** The creature's current size */
@@ -188,6 +197,7 @@ export interface Creature {
   damageVulnerabilities: typeof DAMAGE_TYPES[number][];
   /** The creature's tags (https://www.dndbeyond.com/sources/basic-rules/monsters#Tags) */
   tags: string[];
+  source?: Source;
 }
 
 export interface Character extends Creature {
@@ -268,7 +278,7 @@ export interface Class {
   source?: Source;
 }
 
-export interface Item {
+export interface Item extends Owned, Shareable {
   name: string;
   description: string;
   isMagic: boolean;
@@ -369,6 +379,7 @@ export interface Spell {
   source?: Source;
 }
 
+/** Specifies where the information is from, e.g. Players Handbook */
 export interface Source {
   name: string;
   pages: number[];
