@@ -88,6 +88,7 @@ const SPELL_COMPONENTS = ["v", "s", "m"] as const;
 
 type UserID = string;
 
+/** Represents a object that will be stored as a document in a Firebase collection. */
 export interface FirestoreDoc {
   ref?: any;
   id?: any;
@@ -98,6 +99,11 @@ export interface Owned {
   ownerUserId: UserID;
 }
 
+export interface Timestamped {
+  createdAt: number;
+  updatedAt?: number;
+}
+
 /** Adds a field indicating who this entity is shared with besides the owner. */
 export interface Shareable {
   sharedWith: {
@@ -106,7 +112,7 @@ export interface Shareable {
   }[];
 }
 
-export interface Campaign extends FirestoreDoc {
+export interface Campaign extends FirestoreDoc, Timestamped {
   /** Player-facing name of campaign */
   name: string;
   /** Player-facing description of campaign */
@@ -127,16 +133,14 @@ export interface Campaign extends FirestoreDoc {
   playerNotes?: Note[];
 }
 
-export interface Note extends Owned, Shareable {
+export interface Note extends FirestoreDoc, Owned, Shareable, Timestamped {
   /** Optional title of note */
   title?: string;
   /** The content of the note in ____ format */
   body: string;
-  /** When the note was created */
-  timestamp: number;
 }
 
-export interface Creature extends Owned, Shareable {
+export interface Creature extends Owned, Shareable, Timestamped {
   /** The name of the creature */
   name: string;
   /** The creature's current size */
@@ -278,7 +282,7 @@ export interface Class {
   source?: Source;
 }
 
-export interface Item extends Owned, Shareable {
+export interface Item extends Owned, Shareable, Timestamped {
   name: string;
   description: string;
   isMagic: boolean;
