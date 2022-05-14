@@ -131,6 +131,8 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   playerInviteEmails?: string[];
   /** List of notes */
   playerNotes?: Note[];
+  /** Current mode, determines the view displayed to players and DMs */
+  mode: "combat" | "out-of-combat";
 }
 
 export interface Note extends FirestoreDoc, Owned, Shareable, Timestamped {
