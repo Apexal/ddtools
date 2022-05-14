@@ -87,6 +87,13 @@ const SENSES = [
 const SPELL_COMPONENTS = ["v", "s", "m"] as const;
 
 type UserID = string;
+type Entries =
+  | string[]
+  | {
+      name: string;
+      entires: string[];
+      type: "entries";
+    }[];
 
 /** Represents a object that will be stored as a document in a Firebase collection. */
 export interface FirestoreDoc {
@@ -142,7 +149,7 @@ export interface Note extends FirestoreDoc, Owned, Shareable, Timestamped {
   body: string;
 }
 
-export interface Creature extends Owned, Shareable, Timestamped {
+export interface Creature extends Owned, Shareable, Timestamped, Sourced {
   /** The name of the creature */
   name: string;
   /** The creature's current size */
@@ -203,7 +210,6 @@ export interface Creature extends Owned, Shareable, Timestamped {
   damageVulnerabilities: typeof DAMAGE_TYPES[number][];
   /** The creature's tags (https://www.dndbeyond.com/sources/basic-rules/monsters#Tags) */
   tags: string[];
-  source?: Source;
 }
 
 export interface Character extends Creature {
@@ -270,30 +276,32 @@ export interface Character extends Creature {
   };
 }
 
-export interface Race {
+export interface Race extends Sourced {
   name: string;
   subtype?: string;
-  source?: Source;
 }
 
-export interface Class {
+export interface Class extends Sourced {
   name: string;
   spellcastingAbility?: typeof ABILITIES[number];
   /** The classes current level */
   level: number;
-  source?: Source;
 }
 
-export interface Item extends Owned, Shareable, Timestamped {
+export interface Item extends Owned, Shareable, Timestamped, Sourced {
   name: string;
-  description: string;
   isMagic: boolean;
-  weight: number;
-  source?: Source;
+  /** M=melee, R=ranged, G=gear, GV=generic variant, SHP=vehicle, MNT=mount, TAH=tack and harness, HA=heavy armor */
+  type: "M" | "R" | "G" | "GV" | "SHP" | "MNT" | "TAH" | "HA";
+  rarity?: string;
+  weight?: number;
+  /** Value in copper */
+  value?: number;
+  entries: Entries;
 }
 
 export interface Weapon extends Item {
-  category: string;
+  weaponCategory: string;
   damage: {
     diceRoll: DiceRoll;
     type: typeof DAMAGE_TYPES[number];
@@ -321,10 +329,9 @@ export interface Equipment extends Item {
   quantity: number;
 }
 
-export interface Feat {
+export interface Feat extends Sourced {
   name: string;
   description: string;
-  source?: Source;
 }
 
 export interface SpellDuration {
@@ -346,10 +353,10 @@ export interface SpellRange {
   };
 }
 
-export interface Spell {
+export interface Spell extends Sourced {
   name: string;
   /** Description of spell and effects */
-  entries: string[];
+  entries: Entries;
   /** Spell level where 0 means cantrip */
   level: number;
   /** How long it takes to cast the spell */
@@ -382,11 +389,10 @@ export interface Spell {
   savingThrow: typeof ABILITIES[number][];
   spellAttack: string[];
   tags: string[];
-  source?: Source;
 }
 
 /** Specifies where the information is from, e.g. Players Handbook */
-export interface Source {
-  name: string;
-  pages: number[];
+export interface Sourced {
+  source?: string;
+  page?: number;
 }
