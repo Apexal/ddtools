@@ -122,6 +122,8 @@ export interface Shareable {
 export interface Campaign extends FirestoreDoc, Timestamped {
   /** Player-facing name of campaign */
   name: string;
+  /** Color for campaign to display in UI */
+  color?: string;
   /** Player-facing description of campaign */
   description?: string;
   /** Public URLs to world maps */
