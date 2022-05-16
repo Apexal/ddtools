@@ -124,22 +124,20 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   name: string;
   /** Color for campaign to display in UI */
   color?: string;
-  /** Player-facing description of campaign */
+  /** Player-facing description of campaign, e.g. backstory */
   description?: string;
   /** Public URLs to world maps */
   worldMapUrls?: string[];
   /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
   dmUserIds?: UserID[];
+  /** The names of the users(s) running the campaign. AUTO UPDATED BY FIREBASE FUNCTIONS */
+  dmUserNames?: string[];
   /** The emails of user(s) currently with pending invites to DM */
   dmInviteEmails?: string[];
-  /** List of notes only DMs can access */
-  dmNotes?: Note[];
   /** The ids of users participating in the campaign as players */
   playerUserIds?: UserID[];
   /** The emails of user(s) currently with pending invites to play */
   playerInviteEmails?: string[];
-  /** List of notes */
-  playerNotes?: Note[];
   /** Current mode, determines the view displayed to players and DMs */
   mode: "combat" | "out-of-combat";
 }
