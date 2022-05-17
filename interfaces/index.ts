@@ -91,7 +91,7 @@ type Entries =
   | string[]
   | {
       name: string;
-      entires: string[];
+      entries: string[];
       type: "entries";
     }[];
 
