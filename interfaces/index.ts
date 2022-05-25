@@ -135,13 +135,13 @@ const RARITIES = [
 ] as const;
 
 type UserID = string;
-type Entries =
-  | string[]
+type Entries = (
+  | string
   | {
       name: string;
       entries: string[];
-      type: "entries";
-    }[];
+    }
+)[];
 
 /** Represents a object that will be stored as a document in a Firebase collection. */
 export interface FirestoreDoc {
@@ -342,7 +342,8 @@ export interface Item extends Owned, Shareable, Timestamped, Sourced {
   type?: typeof ITEM_TYPES[number];
   typeAlt?: typeof ITEM_TYPES[number];
   ac?: number;
-  isMagic: boolean;
+  /** Whether the item uses ammunition */
+  ammunition?: boolean;
   /** M=melee, R=ranged, G=gear, GV=generic variant, SHP=vehicle, MNT=mount, TAH=tack and harness, HA=heavy armor */
   weight?: number;
   /** Value in copper */
