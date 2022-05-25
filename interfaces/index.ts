@@ -447,3 +447,12 @@ export interface Sourced {
   source?: string;
   page?: number;
 }
+
+/** An event that is logged. */
+export interface EventLogItem extends Timestamped {
+  type: string;
+  message: string;
+  payload: any;
+  sourceUserIds?: UserID[];
+  targetUserIds?: UserID[];
+}
