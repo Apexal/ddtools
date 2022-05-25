@@ -84,7 +84,55 @@ const SENSES = [
   "truesight",
 ] as const;
 
+const ITEM_TYPES = [
+  "$",
+  "A",
+  "AF",
+  "AIR",
+  "AT",
+  "EM",
+  "EXP",
+  "FD",
+  "G",
+  "GS",
+  "GV",
+  "HA",
+  "INS",
+  "LA",
+  "M",
+  "MA",
+  "MNT",
+  "MR",
+  "OTH",
+  "P",
+  "R",
+  "RD",
+  "RG",
+  "S",
+  "SC",
+  "SCF",
+  "SHP",
+  "T",
+  "TAH",
+  "TG",
+  "VEH",
+  "WD",
+] as const;
+
 const SPELL_COMPONENTS = ["v", "s", "m"] as const;
+
+const RARITIES = [
+  "rare",
+  "uncommon",
+  "very rare",
+  "legendary",
+  "artifact",
+  "common",
+  "none",
+  "unknown",
+  "unknown (magic)",
+  "varies",
+] as const;
 
 type UserID = string;
 type Entries =
@@ -290,10 +338,12 @@ export interface Class extends Sourced {
 
 export interface Item extends Owned, Shareable, Timestamped, Sourced {
   name: string;
+  rarity: typeof RARITIES[number];
+  type?: typeof ITEM_TYPES[number];
+  typeAlt?: typeof ITEM_TYPES[number];
+  ac?: number;
   isMagic: boolean;
   /** M=melee, R=ranged, G=gear, GV=generic variant, SHP=vehicle, MNT=mount, TAH=tack and harness, HA=heavy armor */
-  type: "M" | "R" | "G" | "GV" | "SHP" | "MNT" | "TAH" | "HA";
-  rarity?: string;
   weight?: number;
   /** Value in copper */
   value?: number;
