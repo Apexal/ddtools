@@ -456,3 +456,13 @@ export interface EventLogItem extends Timestamped {
   sourceUserIds?: UserID[];
   targetUserIds?: UserID[];
 }
+
+export interface Audio extends FirestoreDoc, Owned, Shareable, Timestamped {
+  name: string;
+  description?: string;
+  isPlaying?: boolean;
+  isLooped?: boolean;
+  defaultVolume?: number;
+  /** Path to file in Firebase Storage, e.g. "campaigns/camp1/cave.mp3" */
+  filePath: string;
+}
