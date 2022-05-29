@@ -460,10 +460,18 @@ export interface Sourced {
 }
 
 /** An event that is logged. */
-export interface EventLogItem extends Timestamped {
-  type: string;
-  message: string;
-  payload: any;
+export interface EventLogItem extends FirestoreDoc, Timestamped {
+  type:
+    | "campaign-created"
+    | "campaign-updated"
+    | "player-invited"
+    | "dm-invited"
+    | "player-invite-accepted"
+    | "dm-invite-accepted"
+    | "player-invite-declined"
+    | "dm-invite-declined"; // Add types as they are needed here
+  message?: string;
+  payload?: any;
   sourceUserIds?: UserID[];
   targetUserIds?: UserID[];
 }
