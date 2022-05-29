@@ -178,12 +178,23 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   worldMapUrls?: string[];
   /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
   dmUserIds?: UserID[];
-  /** The names of the users(s) running the campaign. AUTO UPDATED BY FIREBASE FUNCTIONS */
-  dmUserNames?: string[];
+  /** Auto-updated summaries of DMS to be able to display ID and name without DB lookups. */
+  dmUserSummaries?: {
+    [userId: UserID]: {
+      displayName: string;
+    };
+  };
   /** The emails of user(s) currently with pending invites to DM */
   dmInviteEmails?: string[];
   /** The ids of users participating in the campaign as players */
   playerUserIds?: UserID[];
+  /** Auto-updated summaries of players to be able to display ID, name, and character name without DB lookups. */
+  playerUserSummaries?: {
+    [userId: UserID]: {
+      displayName: string;
+      currentCharacterName: string;
+    };
+  };
   /** The emails of user(s) currently with pending invites to play */
   playerInviteEmails?: string[];
   /** Current mode, determines the view displayed to players and DMs */
