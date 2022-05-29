@@ -181,7 +181,7 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   /** Auto-updated summaries of DMS to be able to display ID and name without DB lookups. */
   dmUserSummaries?: {
     [userId: UserID]: {
-      displayName: string;
+      displayName: string | null;
     };
   };
   /** The emails of user(s) currently with pending invites to DM */
@@ -191,8 +191,8 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   /** Auto-updated summaries of players to be able to display ID, name, and character name without DB lookups. */
   playerUserSummaries?: {
     [userId: UserID]: {
-      displayName: string;
-      currentCharacterName: string;
+      displayName: string | null;
+      currentCharacterName?: string;
     };
   };
   /** The emails of user(s) currently with pending invites to play */
