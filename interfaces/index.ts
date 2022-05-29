@@ -1,6 +1,6 @@
-const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"] as const;
+export const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"] as const;
 
-const SKILLS = [
+export const SKILLS = [
   "acrobatics",
   "animal handling",
   "arcana",
@@ -21,7 +21,7 @@ const SKILLS = [
   "survival",
 ] as const;
 
-const SIZES = [
+export const SIZES = [
   "tiny",
   "small",
   "medium",
@@ -30,7 +30,7 @@ const SIZES = [
   "gargantuan",
 ] as const;
 
-const ALIGNMENTS = [
+export const ALIGNMENTS = [
   "lawful good",
   "neutral good",
   "chaotic good",
@@ -42,7 +42,7 @@ const ALIGNMENTS = [
   "chaotic evil",
 ] as const;
 
-const DAMAGE_TYPES = [
+export const DAMAGE_TYPES = [
   "piercing",
   "slashing",
   "bludgeoning",
@@ -58,7 +58,7 @@ const DAMAGE_TYPES = [
   "thunder",
 ] as const;
 
-const CONDITIONS = [
+export const CONDITIONS = [
   "blinded",
   "charmed",
   "deafened",
@@ -77,14 +77,14 @@ const CONDITIONS = [
   "unconscious",
 ] as const;
 
-const SENSES = [
+export const SENSES = [
   "blindsight",
   "darkvision",
   "tremorsense",
   "truesight",
 ] as const;
 
-const ITEM_TYPES = [
+export const ITEM_TYPES = [
   "$",
   "A",
   "AF",
@@ -119,9 +119,9 @@ const ITEM_TYPES = [
   "WD",
 ] as const;
 
-const SPELL_COMPONENTS = ["v", "s", "m"] as const;
+export const SPELL_COMPONENTS = ["v", "s", "m"] as const;
 
-const RARITIES = [
+export const RARITIES = [
   "rare",
   "uncommon",
   "very rare",
