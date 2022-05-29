@@ -5,7 +5,7 @@ import {
   CampaignUserSummaries,
   Owned,
   Shareable,
-} from "./utils";
+} from "../utils";
 
 export interface Campaign extends FirestoreDoc, Timestamped {
   /** Player-facing name of campaign */
@@ -14,8 +14,6 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   color?: string;
   /** Player-facing description of campaign, e.g. backstory */
   description?: string;
-  /** Public URLs to world maps */
-  worldMapUrls?: string[];
   /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
   dmUserIds?: UserID[];
   /** The emails of user(s) currently with pending invites to DM */

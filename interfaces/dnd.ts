@@ -9,8 +9,15 @@ import {
   RARITIES,
   ITEM_TYPES,
   SPELL_COMPONENTS,
-} from "./constants";
-import { Owned, Shareable, Timestamped, Sourced, ItemEntries } from "./utils";
+} from "../constants";
+import {
+  Owned,
+  Shareable,
+  Timestamped,
+  Sourced,
+  ItemEntries,
+  FirestoreDoc,
+} from "../utils";
 
 export interface Creature extends Owned, Shareable, Timestamped, Sourced {
   /** The name of the creature */
@@ -19,7 +26,7 @@ export interface Creature extends Owned, Shareable, Timestamped, Sourced {
   size: typeof SIZES[number];
   /** The creature's current speeds */
   speed: {
-    /** The basic speed show on the character sheet */
+    /** The basic speed shown on the character sheet */
     walking: number;
     climbing: number;
     swimming: number;
@@ -75,7 +82,7 @@ export interface Creature extends Owned, Shareable, Timestamped, Sourced {
   tags: string[];
 }
 
-export interface Character extends Creature {
+export interface Character extends FirestoreDoc, Creature {
   /** The character's optional nickname */
   nickname?: string;
   /** The character's current experience points (if used in campaign) */
