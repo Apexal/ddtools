@@ -178,12 +178,23 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   worldMapUrls?: string[];
   /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
   dmUserIds?: UserID[];
-  /** The names of the users(s) running the campaign. AUTO UPDATED BY FIREBASE FUNCTIONS */
-  dmUserNames?: string[];
+  /** Auto-updated summaries of DMS to be able to display ID and name without DB lookups. */
+  dmUserSummaries?: {
+    [userId: UserID]: {
+      displayName: string | null;
+    };
+  };
   /** The emails of user(s) currently with pending invites to DM */
   dmInviteEmails?: string[];
   /** The ids of users participating in the campaign as players */
   playerUserIds?: UserID[];
+  /** Auto-updated summaries of players to be able to display ID, name, and character name without DB lookups. */
+  playerUserSummaries?: {
+    [userId: UserID]: {
+      displayName: string | null;
+      currentCharacterName?: string;
+    };
+  };
   /** The emails of user(s) currently with pending invites to play */
   playerInviteEmails?: string[];
   /** Current mode, determines the view displayed to players and DMs */
@@ -446,4 +457,23 @@ export interface Spell extends Sourced {
 export interface Sourced {
   source?: string;
   page?: number;
+}
+
+/** An event that is logged. */
+export interface EventLogItem extends Timestamped {
+  type: string;
+  message: string;
+  payload: any;
+  sourceUserIds?: UserID[];
+  targetUserIds?: UserID[];
+}
+
+export interface Audio extends FirestoreDoc, Owned, Shareable, Timestamped {
+  name: string;
+  description?: string;
+  isPlaying?: boolean;
+  isLooped?: boolean;
+  defaultVolume?: number;
+  /** Path to file in Firebase Storage, e.g. "campaigns/camp1/cave.mp3" */
+  filePath: string;
 }
