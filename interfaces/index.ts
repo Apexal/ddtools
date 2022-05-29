@@ -134,7 +134,7 @@ const RARITIES = [
   "varies",
 ] as const;
 
-type UserID = string;
+export type UserID = string;
 type Entries = (
   | string
   | {
@@ -143,7 +143,7 @@ type Entries = (
     }
 )[];
 
-type CampaignUserSummary = {
+export type CampaignUserSummary = {
   displayName: string;
 } & (
   | {
@@ -155,7 +155,7 @@ type CampaignUserSummary = {
     }
 );
 
-type CampaignUserSummaries = {
+export type CampaignUserSummaries = {
   [userId: string]: CampaignUserSummary;
 };
 
@@ -479,6 +479,7 @@ export interface EventLogItem extends FirestoreDoc, Timestamped {
   payload?: any;
   sourceUserIds?: UserID[];
   targetUserIds?: UserID[];
+  userSummaries?: CampaignUserSummaries;
 }
 
 export interface Audio extends FirestoreDoc, Owned, Shareable, Timestamped {
