@@ -143,6 +143,22 @@ type Entries = (
     }
 )[];
 
+type CampaignUserSummary = {
+  displayName: string;
+} & (
+  | {
+      as: "dm";
+    }
+  | {
+      as: "player";
+      currentCharacterName?: string;
+    }
+);
+
+type CampaignUserSummaries = {
+  [userId: string]: CampaignUserSummary;
+};
+
 /** Represents a object that will be stored as a document in a Firebase collection. */
 export interface FirestoreDoc {
   ref?: any;
@@ -178,23 +194,12 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   worldMapUrls?: string[];
   /** The id(s) of user(s) running the campaign, i.e. the campaign owners */
   dmUserIds?: UserID[];
-  /** Auto-updated summaries of DMS to be able to display ID and name without DB lookups. */
-  dmUserSummaries?: {
-    [userId: UserID]: {
-      displayName: string | null;
-    };
-  };
   /** The emails of user(s) currently with pending invites to DM */
   dmInviteEmails?: string[];
   /** The ids of users participating in the campaign as players */
   playerUserIds?: UserID[];
-  /** Auto-updated summaries of players to be able to display ID, name, and character name without DB lookups. */
-  playerUserSummaries?: {
-    [userId: UserID]: {
-      displayName: string | null;
-      currentCharacterName?: string;
-    };
-  };
+  /** Auto-updated summaries of users to be able to display role, ID, name, and character name (if player) without DB lookups. */
+  userSummaries?: CampaignUserSummaries;
   /** The emails of user(s) currently with pending invites to play */
   playerInviteEmails?: string[];
   /** Current mode, determines the view displayed to players and DMs */
