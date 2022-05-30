@@ -33,7 +33,7 @@ export interface Creature extends Owned, Shareable, Timestamped, Sourced {
     flying: number;
     burrowing: number;
   };
-  /** The creature's ability scores */
+  /** The creature's ability scores, which are used to determine modifiers for skills and saving throws */
   abilityScores: {
     [ability in typeof ABILITIES[number]]: number;
   };
@@ -50,18 +50,21 @@ export interface Creature extends Owned, Shareable, Timestamped, Sourced {
   passivePerception: number;
   /** The creature's skill values (taking into consideration proficiencies, expertises, etc.) */
   skills: {
-    [skill in typeof SKILLS[number]]: number;
+    [skill in typeof SKILLS[number]]: {
+      isProficient: boolean;
+      isExpertise: boolean;
+      /** Optional miscellaneous modifier to add/subtract */
+      miscModifier?: number;
+    };
   };
-  /** List of skills the creature is proficient in */
-  skillProficiencies: typeof SKILLS[number][];
-  /** List of skills the creature has expertise in */
-  skillExpertises: typeof SKILLS[number][];
-  /** The creature's saving throw modifiers (taking into consideration proficiencies, etc.) */
+  /** The creature's saving throw properties (proficient, etc.) the base value comes from the associated ability */
   savingThrows: {
-    [ability in typeof ABILITIES[number]]: number;
+    [ability in typeof ABILITIES[number]]: {
+      isProficient: boolean;
+      /** Optional miscellaneous modifier to add/subtract */
+      miscModifier?: number;
+    };
   };
-  /** The saving throws the creature is proficient in  */
-  savingThrowProficiencies: typeof ABILITIES[number][];
   /** The creature's understood languages */
   languages: string[];
   /** The special senses the creature has and their ranges in feet (https://www.dndbeyond.com/sources/basic-rules/monsters#Senses) */
@@ -83,6 +86,8 @@ export interface Creature extends Owned, Shareable, Timestamped, Sourced {
 }
 
 export interface Character extends FirestoreDoc, Creature {
+  /** Whether or not this character is actively being used. A player can only have 1 active character per campaign. */
+  isActive: boolean;
   /** The character's optional nickname */
   nickname?: string;
   /** The character's current experience points (if used in campaign) */
@@ -97,11 +102,8 @@ export interface Character extends FirestoreDoc, Creature {
   proficiencyBonus: number;
   /** Whether the character is currently inspired */
   hasInspiration: boolean;
-  /** The character's hit dice info */
-  hitDice: {
-    current: number;
-    max: number;
-  };
+  /** The hit dice the character currently has (out of a max of the character's level) */
+  hitDice: DiceRoll[];
   /** The character's current death saves info */
   deathSaves: {
     successes: number;
@@ -190,7 +192,7 @@ export interface DiceRoll {
   /** The number of times to roll the `sides`-sided dice */
   count: number;
   /** The modifier to add onto the roll value */
-  modifier: number;
+  modifier?: number;
 }
 
 export interface Range {
