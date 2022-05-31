@@ -35,8 +35,8 @@ export interface Note extends FirestoreDoc, Owned, Shareable, Timestamped {
   body: string;
 }
 
-/** An event that is logged. */
-export interface EventLogItem extends FirestoreDoc, Timestamped {
+/** Something logged at a particular moment in time. */
+export interface LogItem extends FirestoreDoc, Timestamped {
   type:
     | "campaign-created"
     | "campaign-updated"
@@ -45,7 +45,12 @@ export interface EventLogItem extends FirestoreDoc, Timestamped {
     | "player-invite-accepted"
     | "dm-invite-accepted"
     | "player-invite-declined"
-    | "dm-invite-declined"; // Add types as they are needed here
+    | "dm-invite-declined"
+    | "share-item"
+    | "share-note"
+    | "share-spell"
+    | "share-rule"
+    | "chat-message"; // Add types as they are needed here
   message?: string;
   payload?: any;
   sourceUserIds?: UserID[];
