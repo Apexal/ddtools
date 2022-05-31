@@ -33,6 +33,8 @@ export interface Creature extends Owned, Shareable, Timestamped, Sourced {
     flying: number;
     burrowing: number;
   };
+  /** Current initiative of the creature */
+  initiative?: number;
   /** The creature's ability scores, which are used to determine modifiers for skills and saving throws */
   abilityScores: {
     [ability in typeof ABILITIES[number]]: number;
@@ -90,6 +92,8 @@ export interface Character extends FirestoreDoc, Creature {
   isActive: boolean;
   /** The character's optional nickname */
   nickname?: string;
+  // /** What is revealed to other players */
+  // revealedToOtherCharacters: ("abilities" | "alignment" | "background")[];
   /** The character's current experience points (if used in campaign) */
   xp: number;
   /** The character's race */
@@ -102,8 +106,8 @@ export interface Character extends FirestoreDoc, Creature {
   proficiencyBonus: number;
   /** Whether the character is currently inspired */
   hasInspiration: boolean;
-  /** The hit dice the character currently has (out of a max of the character's level) */
-  hitDice: DiceRoll[];
+  /** Whether or not character currently has Jack of All Trades (stupid lvl2+ bard thing), adds half of proficiency bonus for skills where not proficient  */
+  isJackOfAllTrades: boolean;
   /** The character's current death saves info */
   deathSaves: {
     successes: number;
@@ -158,17 +162,24 @@ export interface Class extends Sourced {
   spellcastingAbility?: typeof ABILITIES[number];
   /** The classes current level */
   level: number;
+  /** The current hit dice values for this class */
+  hitDice: {
+    /** The type of  */
+    sides: 6 | 8 | 10 | 12;
+    /** Out of `level` max */
+    current: number;
+  };
 }
 
 export interface Item extends Owned, Shareable, Timestamped, Sourced {
   name: string;
   rarity: typeof RARITIES[number];
+  /** M=melee, R=ranged, G=gear, GV=generic variant, SHP=vehicle, MNT=mount, TAH=tack and harness, HA=heavy armor */
   type?: typeof ITEM_TYPES[number];
   typeAlt?: typeof ITEM_TYPES[number];
   ac?: number;
   /** Whether the item uses ammunition */
   ammunition?: boolean;
-  /** M=melee, R=ranged, G=gear, GV=generic variant, SHP=vehicle, MNT=mount, TAH=tack and harness, HA=heavy armor */
   weight?: number;
   /** Value in copper */
   value?: number;
