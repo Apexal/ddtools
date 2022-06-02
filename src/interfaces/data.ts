@@ -67,3 +67,25 @@ export interface Audio extends FirestoreDoc, Owned, Shareable, Timestamped {
   /** Path to file in Firebase Storage, e.g. "campaigns/camp1/cave.mp3" */
   filePath: string;
 }
+
+/** A pinned location on a map. */
+export interface MapPin {
+  /** Relative location of pin on the map in percentages so it can be used on any size of the map */
+  location: { xPercentage: number; yPercentage: number };
+  /** Optional displayed name of the map */
+  name?: string;
+  /** Optional displayed description of the map or what it presents */
+  description?: string;
+  /** If set, should display a link to another map along with the thumbnail of that map */
+  targetMapID?: string;
+}
+
+export interface Map extends FirestoreDoc, Owned, Shareable, Timestamped {
+  /** Optional parent map for navigation purposes */
+  parentMapId?: string;
+  name?: string;
+  description?: string;
+  pins?: MapPin[];
+  /** ID of PNG image in Firebase Storage folder for map thumbnails */
+  thumbnailImageID?: string;
+}
