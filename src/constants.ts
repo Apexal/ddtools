@@ -21,6 +21,29 @@ export const SKILLS = [
   "survival",
 ] as const;
 
+export const SKILLS_TO_ABILITIES: {
+  [skill in typeof SKILLS[number]]: typeof ABILITIES[number];
+} = {
+  acrobatics: "dex",
+  "animal handling": "wis",
+  arcana: "int",
+  athletics: "str",
+  deception: "cha",
+  history: "int",
+  insight: "wis",
+  intimidation: "cha",
+  investigation: "int",
+  medicine: "wis",
+  nature: "int",
+  perception: "wis",
+  performance: "cha",
+  persuasion: "cha",
+  religion: "int",
+  "sleight of Hand": "dex",
+  stealth: "dex",
+  survival: "wis",
+};
+
 export const SIZES = [
   "tiny",
   "small",
