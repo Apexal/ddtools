@@ -15,9 +15,9 @@ import {
   Shareable,
   Timestamped,
   Sourced,
-  ItemEntries,
+  Entries,
   FirestoreDoc,
-} from "../utils";
+} from "./utils";
 
 export interface Creature extends Owned, Shareable, Timestamped, Sourced {
   /** The name of the creature */
@@ -152,9 +152,16 @@ export interface Character extends FirestoreDoc, Creature {
   };
 }
 
-export interface Race extends Sourced {
+/** Represents a known race of creatures/characters. */
+export interface Race extends FirestoreDoc, Sourced {
   name: string;
   subtype?: string;
+  size?: string[];
+  speed?: {
+    walk?: number;
+    fly?: number;
+  };
+  entries: Entries[];
 }
 
 export interface Class extends Sourced {
@@ -183,7 +190,7 @@ export interface Item extends Owned, Shareable, Timestamped, Sourced {
   weight?: number;
   /** Value in copper */
   value?: number;
-  entries: ItemEntries;
+  entries: Entries;
 }
 
 export interface Weapon extends Item {
@@ -242,7 +249,7 @@ export interface SpellRange {
 export interface Spell extends Sourced {
   name: string;
   /** Description of spell and effects */
-  entries: ItemEntries;
+  entries: Entries;
   /** Spell level where 0 means cantrip */
   level: number;
   /** How long it takes to cast the spell */

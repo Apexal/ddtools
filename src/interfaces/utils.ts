@@ -1,5 +1,5 @@
 export type UserID = string;
-export type ItemEntries = (
+export type Entries = (
   | string
   | {
       name: string;

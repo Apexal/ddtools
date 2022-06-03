@@ -5,7 +5,7 @@ import {
   CampaignUserSummaries,
   Owned,
   Shareable,
-} from "../utils";
+} from "./utils";
 
 export interface Campaign extends FirestoreDoc, Timestamped {
   /** Player-facing name of campaign */
