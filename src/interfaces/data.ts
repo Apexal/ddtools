@@ -86,6 +86,4 @@ export interface Map extends FirestoreDoc, Owned, Shareable, Timestamped {
   name?: string;
   description?: string;
   pins?: MapPin[];
-  /** ID of PNG image in Firebase Storage folder for map thumbnails */
-  thumbnailImageID?: string;
 }
