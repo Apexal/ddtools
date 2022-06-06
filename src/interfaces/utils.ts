@@ -26,7 +26,7 @@ export type CampaignUserSummaries = {
 /** Represents a object that will be stored as a document in a Firebase collection. */
 export interface FirestoreDoc {
   ref?: any;
-  id?: any;
+  id?: string;
 }
 
 /** Adds a field indicating the main owner of the entity */
@@ -35,8 +35,8 @@ export interface Owned {
 }
 
 export interface Timestamped {
-  createdAt: number;
-  updatedAt?: number;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 /** Adds a field indicating who this entity is shared with besides the owner. */

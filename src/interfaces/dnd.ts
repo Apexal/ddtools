@@ -161,7 +161,13 @@ export interface Race extends FirestoreDoc, Sourced {
     walk?: number;
     fly?: number;
   };
-  entries: Entries[];
+  entries: Entries;
+}
+
+export interface ClassFeature extends Sourced {
+  name: string;
+  level: number;
+  entries: Entries;
 }
 
 export interface Class extends Sourced {
@@ -176,6 +182,7 @@ export interface Class extends Sourced {
     /** Out of `level` max */
     current: number;
   };
+  features: ClassFeature;
 }
 
 export interface Item extends Owned, Shareable, Timestamped, Sourced {
@@ -184,7 +191,7 @@ export interface Item extends Owned, Shareable, Timestamped, Sourced {
   /** M=melee, R=ranged, G=gear, GV=generic variant, SHP=vehicle, MNT=mount, TAH=tack and harness, HA=heavy armor */
   type?: typeof ITEM_TYPES[number];
   typeAlt?: typeof ITEM_TYPES[number];
-  ac?: number;
+  armorClass?: number;
   /** Whether the item uses ammunition */
   ammunition?: boolean;
   weight?: number;

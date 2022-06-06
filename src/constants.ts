@@ -44,14 +44,7 @@ export const SKILLS_TO_ABILITIES: {
   survival: "wis",
 };
 
-export const SIZES = [
-  "tiny",
-  "small",
-  "medium",
-  "large",
-  "huge",
-  "gargantuan",
-] as const;
+export const SIZES = ["T", "S", "M", "L", "H", "G"] as const;
 
 export const ALIGNMENTS = [
   "lawful good",
