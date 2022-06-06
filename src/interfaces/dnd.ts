@@ -10,14 +10,7 @@ import {
   ITEM_TYPES,
   SPELL_COMPONENTS,
 } from "../constants";
-import {
-  Owned,
-  Shareable,
-  Timestamped,
-  Sourced,
-  Entries,
-  FirestoreDoc,
-} from "./utils";
+import { Owned, Shareable, Timestamped, Sourced, Entries } from "./utils";
 
 export interface Creature extends Owned, Shareable, Timestamped, Sourced {
   /** The name of the creature */
@@ -87,7 +80,7 @@ export interface Creature extends Owned, Shareable, Timestamped, Sourced {
   tags: string[];
 }
 
-export interface Character extends FirestoreDoc, Creature {
+export interface Character extends Creature {
   /** Whether or not this character is actively being used. A player can only have 1 active character per campaign. */
   isActive: boolean;
   /** The character's optional nickname */
@@ -153,7 +146,7 @@ export interface Character extends FirestoreDoc, Creature {
 }
 
 /** Represents a known race of creatures/characters. */
-export interface Race extends FirestoreDoc, Sourced {
+export interface Race extends Sourced {
   name: string;
   subtype?: string;
   size?: string[];
@@ -182,7 +175,7 @@ export interface Class extends Sourced {
     /** Out of `level` max */
     current: number;
   };
-  features: ClassFeature;
+  features: ClassFeature[];
 }
 
 export interface Item extends Owned, Shareable, Timestamped, Sourced {

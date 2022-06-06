@@ -1,5 +1,4 @@
 import {
-  FirestoreDoc,
   Timestamped,
   UserID,
   CampaignUserSummaries,
@@ -7,7 +6,7 @@ import {
   Shareable,
 } from "./utils";
 
-export interface Campaign extends FirestoreDoc, Timestamped {
+export interface Campaign extends Timestamped {
   /** Player-facing name of campaign */
   name: string;
   /** Color for campaign to display in UI */
@@ -28,7 +27,7 @@ export interface Campaign extends FirestoreDoc, Timestamped {
   mode: "combat" | "out-of-combat";
 }
 
-export interface Note extends FirestoreDoc, Owned, Shareable, Timestamped {
+export interface Note extends Owned, Shareable, Timestamped {
   /** Optional title of note */
   title?: string;
   /** The content of the note in ____ format */
@@ -36,7 +35,7 @@ export interface Note extends FirestoreDoc, Owned, Shareable, Timestamped {
 }
 
 /** Something logged at a particular moment in time. */
-export interface LogItem extends FirestoreDoc, Timestamped {
+export interface LogItem extends Timestamped {
   type:
     | "campaign-created"
     | "campaign-updated"
@@ -58,7 +57,7 @@ export interface LogItem extends FirestoreDoc, Timestamped {
   userSummaries?: CampaignUserSummaries;
 }
 
-export interface Audio extends FirestoreDoc, Owned, Shareable, Timestamped {
+export interface Audio extends Owned, Shareable, Timestamped {
   name: string;
   description?: string;
   isPlaying?: boolean;
@@ -80,7 +79,7 @@ export interface MapPin {
   targetMapID?: string;
 }
 
-export interface Map extends FirestoreDoc, Owned, Shareable, Timestamped {
+export interface Map extends Owned, Shareable, Timestamped {
   /** Optional parent map for navigation purposes */
   parentMapId?: string;
   name?: string;

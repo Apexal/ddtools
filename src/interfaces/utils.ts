@@ -23,12 +23,6 @@ export type CampaignUserSummaries = {
   [userId: string]: CampaignUserSummary;
 };
 
-/** Represents a object that will be stored as a document in a Firebase collection. */
-export interface FirestoreDoc {
-  ref?: any;
-  id?: string;
-}
-
 /** Adds a field indicating the main owner of the entity */
 export interface Owned {
   ownerUserId: UserID;
