@@ -32,6 +32,8 @@ export interface Note extends Owned, Shareable, Timestamped {
   title?: string;
   /** The content of the note in ____ format */
   body: string;
+  /** Optional tags to assign to the note for searching */
+  tags?: string[];
 }
 
 /** Something logged at a particular moment in time. */
