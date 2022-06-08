@@ -1,12 +1,12 @@
 {
   "name": "ddtools-types",
   "private": false,
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "TypeScript definitions for Daddy's Dungeon Tools.",
   "typeScriptVersion": 4.5,
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build"
+    "prepublish": "tsc"
   },
   "repository": {
     "type": "git",
