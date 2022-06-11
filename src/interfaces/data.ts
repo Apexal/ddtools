@@ -1,9 +1,9 @@
 import {
-  Timestamped,
-  UserID,
   CampaignUserSummaries,
   Owned,
   Shareable,
+  Timestamped,
+  UserID,
 } from "./utils";
 
 export interface Campaign extends Timestamped {
@@ -39,19 +39,21 @@ export interface Note extends Owned, Shareable, Timestamped {
 /** Something logged at a particular moment in time. */
 export interface LogItem extends Timestamped {
   type:
-    | "campaign-created"
-    | "campaign-updated"
-    | "player-invited"
-    | "dm-invited"
-    | "player-invite-accepted"
-    | "dm-invite-accepted"
-    | "player-invite-declined"
-    | "dm-invite-declined"
-    | "share-item"
-    | "share-note"
-    | "share-spell"
-    | "share-rule"
-    | "chat-message"; // Add types as they are needed here
+    | "campaign created"
+    | "campaign updated"
+    | "player invited"
+    | "player uninvited"
+    | "dm invited"
+    | "dm uninvited"
+    | "player invite accepted"
+    | "dm invite accepted"
+    | "player invite declined"
+    | "dm invite declined"
+    | "item"
+    | "note"
+    | "spell"
+    | "rule"
+    | "chat"; // Add types as they are needed here
   message?: string;
   payload?: any;
   sourceUserIds?: UserID[];
@@ -70,7 +72,7 @@ export interface Audio extends Owned, Shareable, Timestamped {
 }
 
 /** A pinned location on a map. */
-export interface MapPin {
+export interface WorldMapPin {
   /** Relative location of pin on the map in percentages so it can be used on any size of the map */
   location: { xPercentage: number; yPercentage: number };
   /** Optional displayed name of the map */
@@ -81,10 +83,10 @@ export interface MapPin {
   targetMapID?: string;
 }
 
-export interface Map extends Owned, Shareable, Timestamped {
+export interface WorldMap extends Owned, Shareable, Timestamped {
   /** Optional parent map for navigation purposes */
   parentMapId?: string;
   name?: string;
   description?: string;
-  pins?: MapPin[];
+  pins?: WorldMapPin[];
 }
