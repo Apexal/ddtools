@@ -90,3 +90,37 @@ export interface WorldMap extends Owned, Shareable, Timestamped {
   description?: string;
   pins?: WorldMapPin[];
 }
+
+export interface BattleMapBGImage {
+  /** Full path to image in Firebase Storage */
+  filePath: string;
+  /** Width in pixels */
+  width: number;
+  /** Height in pixels */
+  height: number;
+  /** x-coordinate in pixels */
+  x: number;
+  /** y-coordinate in pixels */
+  y: number;
+  rotation: number;
+}
+
+export interface BattleMapToken extends Owned, Timestamped {
+  /** User-facing name for map */
+  name: string;
+  /** Determines whether players can see and open the battle map */
+  isActive: boolean;
+  /** Background images that make up the map setting */
+  backgroundImages?: BattleMapBGImage[];
+}
+
+export interface BattleMap extends Owned, Shareable, Timestamped {
+  /** User-facing name for map */
+  name: string;
+  /** Determines whether players can see and open the battle map */
+  isActive: boolean;
+  /** Background images that make up the map setting */
+  backgroundImages?: BattleMapBGImage[];
+  /** Full path to thumbail image in Firebase Storage */
+  thumbnailFilePath?: string;
+}
