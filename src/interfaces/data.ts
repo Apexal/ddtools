@@ -105,13 +105,18 @@ export interface BattleMapBGImage {
   rotation: number;
 }
 
-export interface BattleMapToken extends Owned, Timestamped {
-  /** User-facing name for map */
-  name: string;
-  /** Determines whether players can see and open the battle map */
-  isActive: boolean;
-  /** Background images that make up the map setting */
-  backgroundImages?: BattleMapBGImage[];
+export interface BattleMapToken extends Shareable, Timestamped {
+  /** Full path to thumbnail image in Firebase Storage */
+  thumbnailFilePath: string;
+  type: "creature" | "character";
+  /** ID of creature or character the token is associated with */
+  sourceId: string;
+  /** x-coordinate in pixels */
+  x: number;
+  /** y-coordinate in pixels */
+  y: number;
+  /** Whether or not players can see this token */
+  isVisible: boolean;
 }
 
 export interface BattleMap extends Owned, Shareable, Timestamped {
@@ -123,4 +128,10 @@ export interface BattleMap extends Owned, Shareable, Timestamped {
   backgroundImages?: BattleMapBGImage[];
   /** Full path to thumbail image in Firebase Storage */
   thumbnailFilePath?: string;
+  /** The size in pixels of a single cell, representing 5 feet */
+  gridCellSize: number;
+  /** The number of pixels across the grid is */
+  gridTotalWidth: number;
+  /** The number of pixels in height the grid is */
+  gridTotalHeight: number;
 }
